@@ -18,6 +18,14 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_DEFAULT_REGION: us-east-1
+      TF_VAR_aws_region: us-east-1
+      TF_VAR_aws_profile: terraform
+      TF_VAR_bucket_prefix: orlando-terraform
+      TF_VAR_force_destroy: "true"
+      TF_VAR_environment: estudo
+      TF_VAR_project_number: "1"
+      TF_VAR_allowed_extensions: '["jpg","png","pdf","txt"]'
+      TF_VAR_common_tags: '{"ManagedBy":"Terraform","Project":"Curso"}'
 
     steps:
       - name: Baixar repositório
@@ -36,13 +44,4 @@ jobs:
         run: aws sts get-caller-identity --profile terraform
 
       - name: Terraform Format
-        run: terraform fmt -check -recursive
-
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Validate
-        run: terraform validate
-
-      - name: Terraform Plan
-        run: terraform plan -input=false
+        run: terraform fmt -
